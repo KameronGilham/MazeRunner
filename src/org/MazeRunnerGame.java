@@ -12,8 +12,9 @@ import javafx.stage.Stage;
 
 public class MazeRunnerGame extends Application {
 	
-	int canvasH;
-	int canvasW;
+	int canvasW= 800;
+	int canvasH = 800;
+	Runner runner;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -30,19 +31,26 @@ public class MazeRunnerGame extends Application {
 		stage.setTitle("MazeRunner");
 		stage.show();
 
-		init();
-
 		new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
 
 				gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
+				runner.update(keyboarding, gc);
+				runner.draw(gc);
 
 			}
 
 		}.start();
 
+	}
+	@Override
+	public void init() {
+		
+		runner = new Runner(canvasW/20, canvasH/20, canvasW/20, canvasH/20, Color.TAN);
+		
+		
 	}
 
 }
