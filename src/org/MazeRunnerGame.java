@@ -19,9 +19,10 @@ public class MazeRunnerGame extends Application {
 
 	int canvasW = 800;
 	int canvasH = 800;
-	static boolean gameRunning;
+	boolean gameRunning;
 	Runner runner;
 	String message;
+	String buttonText;
 
 	public MazeRunnerGame() {
 		gameRunning = false;
@@ -37,11 +38,12 @@ public class MazeRunnerGame extends Application {
 
 		Button startButton = new Button("Start");
 		startButton.setOnAction( e -> {message = "";});
-		startButton.setOnAction(e -> {gameRunning = true;});
+		startButton.setOnAction( e -> {gameRunning = true;});
+
 		Button quitButton = new Button("Quit");
 		quitButton.setOnAction( e -> Platform.exit() );
 
-		HBox buttonBar = new HBox(canvasW / 3, startButton, quitButton);
+		HBox buttonBar = new HBox(canvasW / 3, startButton,quitButton);
 		buttonBar.setAlignment(Pos.BOTTOM_CENTER);
 
 		BorderPane game = new BorderPane();
@@ -70,11 +72,11 @@ public class MazeRunnerGame extends Application {
 					gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 					runner.update(keyboarding, gc);
 					runner.draw(gc);
-					gc.setFont(Font.font(canvasH / 10));
+					gc.setFont(Font.font(80));
 					gc.setStroke(Color.BLUE);
-					gc.strokeText("Start", canvasW / 10, canvasH / 10);
+					gc.strokeText("Start", 50, 80);
 					gc.setStroke(Color.GREEN);
-					gc.strokeText("End", canvasW * 8 / 10, canvasH * 9 / 10);
+					gc.strokeText("End", canvasW - 160, canvasH - 50);
 					
 					
 
@@ -88,7 +90,7 @@ public class MazeRunnerGame extends Application {
 	@Override
 	public void init() {
 
-		runner = new Runner(canvasW / 20, canvasH / 20, canvasW / 20, canvasH / 20, Color.TAN);
+		runner = new Runner(25, 25, 25, 25, Color.TAN);
 
 	}
 
