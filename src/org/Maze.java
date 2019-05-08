@@ -11,17 +11,17 @@ public class Maze {
 	int rectH;
 	Color rectColor;
 	
-	public Maze(int x, int y, int w, int h, Color c) {
+	public Maze(int x, int y, int w, int h) {
 		rectX = x;
 		rectY = y;
 		rectW = w;
 		rectH = h;
-		rectColor = c;
+		rectColor = Color.BLACK;
 	}
 	
 	public void draw(GraphicsContext gc) {
 		gc.setStroke(rectColor);
-		gc.setLineWidth(1.0);
+		gc.setLineWidth(5.0);
 		
 		gc.save();
 		

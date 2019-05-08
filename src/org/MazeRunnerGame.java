@@ -1,5 +1,9 @@
 package org;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -21,8 +25,15 @@ public class MazeRunnerGame extends Application {
 	int canvasH = 800;
 	boolean gameRunning;
 	Runner runner;
+	Maze oWall1;
+	Maze oWall2;
+	Maze hWall1;
+	Maze hWall2;
+	Maze vWall1;
+	Maze vWall2;
 	String message;
 	String buttonText;
+	List<Maze> walls = new ArrayList<Maze>();
 
 	public MazeRunnerGame() {
 		gameRunning = false;
@@ -72,11 +83,21 @@ public class MazeRunnerGame extends Application {
 					gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 					runner.update(keyboarding, gc);
 					runner.draw(gc);
+					oWall1.draw(gc);
+					oWall2.draw(gc);
+					
+					Iterator<Maze> wallIter = walls.iterator();
+					while (wallIter.hasNext()) {
+						Maze wallQ = wallIter.next();
+						wallQ.draw(gc);
+					}
+					
+					
 					gc.setFont(Font.font(80));
 					gc.setStroke(Color.BLUE);
 					gc.strokeText("Start", 50, 80);
 					gc.setStroke(Color.GREEN);
-					gc.strokeText("End", canvasW - 160, canvasH - 50);
+					gc.strokeText("End", canvasW - 160, canvasH-10);
 					
 					
 
@@ -91,6 +112,17 @@ public class MazeRunnerGame extends Application {
 	public void init() {
 
 		runner = new Runner(25, 25, 25, 25, Color.TAN);
+		oWall1 = new Maze(100, 100, 700, 10);
+		oWall2 = new Maze(0, 600, 700, 10);
+		
+		for (int i = 200; i < 800; i+=200) {
+			vWall1 = new Maze(i, i - 100, 10, 200);
+			walls.add(vWall1);
+		}
+		for (int i = 600; i > 100; i-=100) {
+			hWall1 = new Maze(i, i + 100, 150, 10);
+			walls.add(hWall1);
+		}
 
 	}
 
