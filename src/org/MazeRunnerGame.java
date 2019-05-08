@@ -58,11 +58,12 @@ public class MazeRunnerGame extends Application {
 
 		BorderPane game = new BorderPane();
 		game.setBottom(buttonBar);
-
-		Scene scene = new Scene(game, canvasW, canvasH + 80, Color.WHITE);
+		game.setCenter(canvas);
+		
+		Scene scene = new Scene(game, canvasW, canvasH + 80, Color.BLACK);
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> keyboarding.keyboardInput(key, gc));
 		scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> keyboarding.keyboardInput(key, gc));
-		game.setCenter(canvas);
+		
 		stage.setScene(scene);
 		stage.setTitle("MazeRunner");
 		stage.show();
@@ -157,27 +158,35 @@ public class MazeRunnerGame extends Application {
 
 			int rX1 = runner.runnerX - runner.runnerW / 2;
 			int rX2 = runner.runnerX + runner.runnerW / 2;
-			int rY1 = runner.runnerX - runner.runnerH / 2;
-			int rY2 = runner.runnerX + runner.runnerH / 2;
+			int rY1 = runner.runnerY - runner.runnerH / 2;
+			int rY2 = runner.runnerY + runner.runnerH / 2;
 
 			if (keyboarding.up) {
-				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+				System.out.println(1);
+
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 <= wY2 && rY2 >= wY1) {
 					keyboarding.up = false;
+					runner.runnerY++;
+			
+					
 				}
 			}
 			if (keyboarding.down) {
-				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 <= wY2 && rY2 >= wY1) {
 					keyboarding.down = false;
+					runner.runnerY--;
 				}
 			}
 			if (keyboarding.left) {
-				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 <= wY2 && rY2 >= wY1) {
 					keyboarding.left = false;
+					runner.runnerX++;
 				}
 			}
 			if (keyboarding.right) {
-				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 <= wY2 && rY2 >= wY1) {
 					keyboarding.right = false;
+					runner.runnerX--;
 				}
 			}
 
