@@ -20,13 +20,9 @@ public class Maze {
 	}
 	
 	public void draw(GraphicsContext gc) {
-		gc.setStroke(rectColor);
-		gc.setLineWidth(5.0);
-		
+		gc.setFill(rectColor);
 		gc.save();
-		
-		gc.strokeRect(rectX, rectY, rectW, rectH);
-			
+		gc.fillRect(rectX, rectY, rectW, rectH);		
 		gc.restore();
 		
 	}

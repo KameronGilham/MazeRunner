@@ -21,8 +21,8 @@ import javafx.stage.Stage;
 
 public class MazeRunnerGame extends Application {
 
-	int canvasW = 800;
-	int canvasH = 800;
+	static int canvasW = 800;
+	static int canvasH = 800;
 	boolean gameRunning;
 	Runner runner;
 	Maze wall;
@@ -80,19 +80,13 @@ public class MazeRunnerGame extends Application {
 				if (gameRunning) {
 					gc.clearRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 					
+					collision(keyboarding);
+
 					gc.setFont(Font.font(80));
 					gc.setStroke(Color.BLUE);
 					gc.strokeText("Start", 50, 80);
 					gc.setStroke(Color.GREEN);
 					gc.strokeText("End", canvasW - 160, canvasH - 10);
-
-					runner.update(keyboarding, gc);
-					runner.draw(gc);
-					if(runner.runnerY > 700) {
-						gc.setStroke(Color.HOTPINK);
-						gc.strokeText("You Win!!!", canvasW/4, canvasH/2);
-						
-					}
 
 					Iterator<Maze> wallIter = walls.iterator();
 					while (wallIter.hasNext()) {
@@ -100,7 +94,15 @@ public class MazeRunnerGame extends Application {
 						wallQ.draw(gc);
 					}
 
+					runner.update(keyboarding, gc);
+					runner.draw(gc);
 					
+
+					if (runner.runnerY > 725) {
+						gc.setFill(Color.HOTPINK);
+						gc.fillText("You Win!!!", canvasW / 4, canvasH / 2);
+
+					}
 
 				}
 			}
@@ -112,7 +114,7 @@ public class MazeRunnerGame extends Application {
 	@Override
 	public void init() {
 
-		runner = new Runner(25, 25, 25, 25, Color.TAN);
+		runner = new Runner(30, 30, 30, 30, Color.TAN);
 		wall = new Maze(100, 100, 700, 10);
 		walls.add(wall);
 		wall = new Maze(0, 600, 700, 10);
@@ -140,8 +142,47 @@ public class MazeRunnerGame extends Application {
 		}
 
 	}
-	
-	public void collision() {
-		
+
+	public void collision(KeyboardInputs keyboarding) {
+
+		Iterator<Maze> wallIter2 = walls.iterator();
+
+		while (wallIter2.hasNext()) {
+			Maze wallQ2 = wallIter2.next();
+
+			int wX1 = wallQ2.rectX;
+			int wX2 = wallQ2.rectX + wallQ2.rectW;
+			int wY1 = wallQ2.rectY;
+			int wY2 = wallQ2.rectY + wallQ2.rectH;
+
+			int rX1 = runner.runnerX - runner.runnerW / 2;
+			int rX2 = runner.runnerX + runner.runnerW / 2;
+			int rY1 = runner.runnerX - runner.runnerH / 2;
+			int rY2 = runner.runnerX + runner.runnerH / 2;
+
+			if (keyboarding.up) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+					keyboarding.up = false;
+				}
+			}
+			if (keyboarding.down) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+					keyboarding.down = false;
+				}
+			}
+			if (keyboarding.left) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+					keyboarding.left = false;
+				}
+			}
+			if (keyboarding.right) {
+				if (rX1 <= wX2 && rX2 >= wX1 && rY1 >= wY2 && rY2 <= wY1) {
+					keyboarding.right = false;
+				}
+			}
+
+		}
+
 	}
+
 }
